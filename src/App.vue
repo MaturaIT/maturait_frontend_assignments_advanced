@@ -1,6 +1,8 @@
 <template>
-  <nav-bar />
-  <router-view></router-view>
+  <div class="w-full">
+    <nav-bar />
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
