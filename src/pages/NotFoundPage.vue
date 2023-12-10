@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>404 Not found</h1>
+    <h2 class="text-2xl">404 Not found</h2>
     <p>Oops! Seems like page <i>{{ $route.path }}</i> doesn't exist</p>
   </div>
 </template>

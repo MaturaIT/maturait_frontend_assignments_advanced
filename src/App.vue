@@ -1,9 +1,10 @@
 <template>
-  <h1 className="text-3xl">Hello world!</h1>
-  <router-link :to="{ name: 'Home' }">Home</router-link>
-  <router-view></router-view>
+  <div class="w-full">
+    <nav-bar />
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
+import NavBar from '@/components/NavBar.vue'
 </script>
-
