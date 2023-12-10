@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex justify-evenly">
     <h1 class="text-3xl">MaturaIT Shop</h1>
     <router-link :to="{ name: 'Home' }">Home</router-link>
     <cart-icon />
