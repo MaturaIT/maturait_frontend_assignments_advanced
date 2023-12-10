@@ -1,6 +1,9 @@
 <template>
-  <div class="flex justify-evenly">
-    <h1 class="text-3xl">MaturaIT Shop</h1>
+  <div class="flex justify-evenly items-end p-2">
+    <span class="flex -gap-1">
+      <img src="../../favicon.ico" alt="MaturaIT Shop Logo">
+      <h1 class="text-3xl">aturaIT Shop</h1>
+    </span>
     <router-link :to="{ name: 'Home' }">Home</router-link>
     <cart-icon />
   </div>
