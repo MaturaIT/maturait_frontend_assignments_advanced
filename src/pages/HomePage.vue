@@ -4,7 +4,7 @@
       <span class="text-4xl">Home page</span>
     </div>
     <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 p-2">
-      <div v-if="isPending"><LoadingIcon /></div>
+      <div v-if="isPending" class="place-self-center"><LoadingIcon /></div>
       <ProductItem v-else-if="isSuccess" v-for="product in data" :key="product.id" :name="product.title" :price="product.price" :image="product.image" />
     </div>
   </div>
