@@ -1,12 +1,13 @@
 <template>
   <div>
     Home page
-    <div v-if="isPending">Is pending</div>
+    <div v-if="isPending"><LoadingIcon /></div>
     <div v-else-if="isSuccess" v-for="product in data" :key="product.id">{{ product.title }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import LoadingIcon from '@/icons/LoadingIcon.vue'
 import { useQuery } from '@tanstack/vue-query';
 
 const { isPending, isSuccess, data, error } = useQuery({
