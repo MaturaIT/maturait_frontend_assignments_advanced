@@ -4,7 +4,7 @@
     <div class="flex flex-col max-w-full justify-center items-center p-2 place-self-end">
       <span class="truncate text-center px-2">{{ shortenedName }}</span>
       <span class="after:content-['zł'] after:italic">{{ price }}</span>
-      <span class="after:content-['⭐']">{{ rating }}</span>
+      <span class="after:content-['⭐']">{{ rating.toPrecision(1) }}</span>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ const props = defineProps<{
   name: string,
   price: number,
   image: string,
+  rating: number,
 }>()
 
 const shortenedName = computed(() => {
@@ -25,7 +26,6 @@ const shortenedName = computed(() => {
   }
   else return props.name
 })
-const rating = (Math.random() * 4).toPrecision(1)
 
 </script>
 
