@@ -5,7 +5,7 @@
       <img :src="data.image" alt="Product image" width="512" height="512"
         class="m-12 border rounded-lg h-[512px]"
       >
-      <div class="flex flex-col justify-between items-center gap-2 p-12 h-[512px] border rounded-lg">
+      <div class="flex flex-col justify-between items-center gap-2 p-12 h-[512px] border rounded-lg mr-4">
         <div class="flex justify-between w-full">
           <span class="text-gray-400">Category:<br />{{ data.category }}</span>
           <span class="after:content-['⭐']">{{ data.rating }}</span>
