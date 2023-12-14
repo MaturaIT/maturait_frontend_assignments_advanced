@@ -38,7 +38,9 @@ const { isPending, isSuccess, data, error } = useQuery({
       console.log(error)
       return
     }
-    return response.json()
+    const product = await response.json()
+    product.rating = Math.round((Math.random() * 4))
+    return product
   }
 })
 
