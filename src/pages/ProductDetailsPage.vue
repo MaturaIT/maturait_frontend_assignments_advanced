@@ -1,13 +1,15 @@
 <template>
   <div class="flex justify-center">
     <LoadingIcon v-if="isPending" />
-    <div v-else-if="isSuccess" class="flex flex-col justify-center items-center gap-2">
+    <div v-else-if="isSuccess" class="flex justify-center items-center gap-2">
       <img :src="data.image" alt="Product image" width="256" height="256">
-      {{ data.title }}
-      {{ data.price }}
-      {{ data.category }}
-      {{ data.description }}
-      {{ data.rating }}
+      <div class="flex flex-col items-center gap-2">
+        <span>{{ data.title }}</span>
+        <span class="after:content-['zł'] after:italic">{{ data.price }}</span>
+        <span>{{ data.category }}</span>
+        <span>{{ data.description }}</span>
+        <span class="after:content-['⭐']">{{ data.rating }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +28,6 @@
 import LoadingIcon from '@/icons/LoadingIcon.vue';
 import { useQuery } from '@tanstack/vue-query';
 import { useRoute } from 'vue-router';
-
 
 const { params } = useRoute()
 
