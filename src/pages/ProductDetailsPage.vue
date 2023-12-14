@@ -16,7 +16,7 @@
         </div>
         <div class="flex justify-end gap-2 w-full items-center">
           <span class="after:content-['zł'] after:italic">{{ data.price }}</span>
-          <button class="text-white bg-blue-600 rounded-3xl px-3 py-2">Add to cart</button>
+          <button @click="addToCart" class="text-white bg-blue-600 rounded-3xl px-3 py-2">Add to cart</button>
         </div>
       </div>
     </div>
@@ -25,10 +25,12 @@
 
 <script setup lang="ts">
 import LoadingIcon from '@/icons/LoadingIcon.vue';
+import { useCartStore } from '@/stores/cartStore';
 import { useQuery } from '@tanstack/vue-query';
 import { useRoute } from 'vue-router';
 
 const { params } = useRoute()
+const cart = useCartStore()
 
 const { isPending, isSuccess, data, error } = useQuery({
   queryKey: ['product'],
@@ -47,6 +49,10 @@ const { isPending, isSuccess, data, error } = useQuery({
 
 function capitalizeFirstLetter(string: string) { 
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+const addToCart = () => {
+  cart.addProduct(data.value)
 }
 
 </script>
