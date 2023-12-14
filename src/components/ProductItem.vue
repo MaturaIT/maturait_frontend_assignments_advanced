@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// Display product name, price, image, and rating.
 const props = defineProps<{
   id: number,
   name: string,
