@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-col items-center justify-center p-2">
-      <span class="text-4xl">Home page</span>
+      <span class="text-4xl p-2">Home page</span>
       <div>
         <label class="p-2">Search for a product:<input class="border" type="text" v-model="search"></label>
         <label>Sort by:
@@ -16,7 +16,7 @@
     </div>
     <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 p-2">
       <div v-if="isPending" class="place-self-center"><LoadingIcon /></div>
-      <ProductItem v-else-if="isSuccess" v-for="product in searchedProducts" :key="product.id" :name="product.title" :price="product.price" :image="product.image" :rating="product.rating" />
+      <ProductItem v-else-if="isSuccess" v-for="product in searchedProducts" :key="product.id" :id="product.id" :name="product.title" :price="product.price" :image="product.image" :rating="product.rating" />
     </div>
   </div>
 </template>
