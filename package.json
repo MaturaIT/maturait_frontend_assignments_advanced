@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.13.4",
+    "@types/canvas-confetti": "^1.6.4",
+    "canvas-confetti": "^1.9.2",
     "pinia": "^2.1.7",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
