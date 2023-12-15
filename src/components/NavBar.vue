@@ -7,6 +7,7 @@
     <router-link :to="{ name: 'Home' }">Home</router-link>
     <div>
       <cart-icon @click="toggleShowCart" class="hover:bg-gray-500" />
+      <span class="absolute">{{ cartStore.cart.length }}</span>
       <div v-if="ifShowCart" class="absolute border border-emerald-500 rounded-lg bg-slate-400">
         <div v-for="product in cartStore.cart" :key="product.id">
           <div>
