@@ -29,7 +29,9 @@ import { useCartStore } from '@/stores/cartStore';
 import type { Product } from '@/types/common';
 import { computed } from 'vue';
 import confetti from 'canvas-confetti'
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 
 const cartStore = useCartStore()
 
@@ -43,7 +45,7 @@ const summmedPrice = computed(() => {
 })
 
 const fireConfetti = () => {
-  
+
   var count = 200;
   var defaults = {
     origin: { y: 0.9 }
@@ -104,6 +106,8 @@ const fireConfetti = () => {
     startVelocity: 45,
   });
   }, 200)
+
+  router.push({ name: 'Home' })
 
 }
 
