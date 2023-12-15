@@ -19,7 +19,7 @@
         </div>
         <div class="flex justify-between">
           <button @click="clearCart" class="bg-white">Clear</button>
-          <router-link :to="{ name: 'Home' }" class="text-white bg-blue-600">Buy now</router-link>
+          <router-link :to="{ name: 'Checkout' }" class="text-white bg-blue-600">Buy now</router-link>
         </div>
       </div>
     </div>
