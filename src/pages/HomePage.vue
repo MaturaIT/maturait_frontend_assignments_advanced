@@ -16,7 +16,7 @@
     </div>
     <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 p-2">
       <div v-if="isPending" class="place-self-center"><LoadingIcon /></div>
-      <ProductItem v-else-if="isSuccess" v-for="product in searchedProducts" :key="product.id" :id="product.id" :name="product.title" :price="product.price" :image="product.image" :rating="product.rating" />
+      <product-item v-else-if="isSuccess" v-for="product in searchedProducts" :key="product.id" :id="product.id" :name="product.title" :price="product.price" :image="product.image" :rating="product.rating" />
     </div>
   </div>
 </template>
