@@ -16,7 +16,7 @@
         </div>
         <div class="flex justify-end gap-2 w-full items-center">
           <span class="after:content-['zł'] after:italic">{{ product.price }}</span>
-          <button @click="deleteFromCart(product.id)" class="text-white bg-blue-600 rounded-3xl px-3 py-2">Delete from cart</button>
+          <button @click="deleteFromCart(product.shopId)" class="text-white bg-blue-600 rounded-3xl px-3 py-2">Delete from cart</button>
         </div>
       </div>
     </div>
