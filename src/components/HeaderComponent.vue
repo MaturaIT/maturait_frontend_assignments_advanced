@@ -1,4 +1,5 @@
 <script setup>
+import ThemeToggler from './darkmode/ThemeToggler.vue'
 import { ref } from 'vue'
 
 const isDropdownOpen = ref(false)
@@ -11,6 +12,10 @@ const cartItems = []
     <!-- Website Title and Home Link -->
     <div class="text-2xl font-semibold">
       <router-link to="/">Your E-Commerce</router-link>
+    </div>
+
+    <div>
+      <ThemeToggler />
     </div>
 
     <!-- Cart Basket with Number Indicator and Dropdown -->
@@ -50,7 +55,9 @@ const cartItems = []
             </div>
           </div>
           <div class="flex items-center justify-center">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+            <button
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
               <router-link to="/cart">Checkout</router-link>
             </button>
           </div>
