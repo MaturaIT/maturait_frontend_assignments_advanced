@@ -8,7 +8,7 @@ import SearchBar from '../components/SearchBar.vue'
     <HeaderComponent />
     <SearchBar />
   </header>
-  <div>
+  <div class="container mx-auto flex">
     <router-view></router-view>
   </div>
   <FooterComponent />

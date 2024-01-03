@@ -43,7 +43,7 @@ const cartItems = []
       <!-- Dropdown Content -->
       <div
         v-show="isDropdownOpen"
-        class="absolute z-10 top-10 right-0 bg-white shadow-md rounded-lg px-6 py-4 mt-2"
+        class="absolute z-10 top-10 right-0 bg-white dark:bg-gray-400 shadow-md rounded-lg px-6 py-4 mt-2"
       >
         <div class="flex flex-col gap-2">
           <!-- Cart Items (replace with actual data) -->
@@ -56,7 +56,7 @@ const cartItems = []
           </div>
           <div class="flex items-center justify-center">
             <button
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              class="text-white bg-blue-600 hover:bg-slate-400 dark:text-white dark:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
               <router-link to="/cart">Checkout</router-link>
             </button>
