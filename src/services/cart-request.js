@@ -1,23 +1,23 @@
 import AxiosInstance from './axios-instance'
 
 class CartRequest {
-  getCart(data) {
-    const url = '/user/cart'
-    return AxiosInstance.get(url, data)
+  getCart() {
+    const url = '/carts'
+    return AxiosInstance.get(url)
   }
 
-  updateCart(data) {
-    const url = '/user/cart'
-    return AxiosInstance.post(url, data)
+  updateCart(product_model_id, data) {
+    const url = `/carts/${product_model_id}`
+    return AxiosInstance.put(url, data)
   }
 
   addCart(data) {
-    const url = '/user/cart'
+    const url = '/carts'
     return AxiosInstance.post(url, data)
   }
 
   deleteCart(product_model_id) {
-    const url = `/user/cart/${product_model_id}`
+    const url = `/carts/${product_model_id}`
     return AxiosInstance.delete(url)
   }
 }

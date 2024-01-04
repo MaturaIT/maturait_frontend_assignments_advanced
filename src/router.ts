@@ -7,6 +7,7 @@ import CheckoutPage from '@/views/CheckoutPage.vue';
 const routes: Array<RouteRecordRaw> = [
   { path: '/', component: ProductListPage },
   { path: '/products/:id', name: 'product-details', component: ProductDetailsPage, props: true },
+  { path: '/category/:category', component: ProductListPage, props: true },
   { path: '/checkout', component: CheckoutPage },
 ];
 

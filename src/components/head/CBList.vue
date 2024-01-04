@@ -2,8 +2,6 @@
 import { reactive, ref, watchEffect, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CartRequest from '@/services/cart-request'
-import OrderRequest from '@/services/order-request'
-import AccountRequest from '@/services/account-request'
 import { useCart } from '@/stores/cart'
 import { toast } from '@/stores/toast'
 import { useUser } from '@/stores/user'
@@ -35,8 +33,8 @@ const cartPayload = reactive({
   page: 1,
 })
 watchEffect(async() => {
-  const { data: cartData } = await CartRequest.getCart({ params: { limit: cartPayload.limit, page: cartPayload.page } })
-  cart.result = cartData
+  const cartData = await CartRequest.getCart()
+  cart.result = cartData[0]?.products
 })
 const handleDelete = async(id) => {
   removeItemByIndex(cart.result, id, 1)
@@ -51,13 +49,6 @@ const payloadOrder = reactive({
     quantity: '',
   }],
 })
-const avatarID = ref('')
-onMounted(async() => {
-  const { data: addressData } = await AccountRequest.getAddress()
-  payloadOrder.address_id = addressData.filter(e => Object.keys(addressData.id === 0))[0].id
-  const { data: userData } = await AccountRequest.getProfile()
-  avatarID.value = userData.profile.avatar_image
-})
 
 const handleOrder = async() => {
   if (payloadOrder.address_id) {
@@ -67,37 +58,30 @@ const handleOrder = async() => {
   }
   else {
     // useToast.updateToast('error', 'Please need fill your address information!', true)
-    router.push({ path: '/buyer/account/address' })
+    router.push({ path: '/checkout' })
   }
 }
 </script>
 
 <template>
-  <div class="flex justify-center items-center lg:w-xs text-white dark:text-black">
-    <div class="mx-5">
-      <router-link to="#">
-        <div class="hover:text-[#adff2f] dark:text-[#adff2f]" style="filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="currentColor" d="M453.122 79.012a128 128 0 0 0-181.087.068l-15.511 15.7l-15.382-15.666l-.1-.1a128 128 0 0 0-181.02 0l-6.91 6.91a128 128 0 0 0 0 181.019l182.373 182.371l20.595 21.578l.491-.492l.533.533l19.296-20.359L460.032 266.94a128.147 128.147 0 0 0 0-181.019zM437.4 244.313L256.571 425.146L75.738 244.313a96 96 0 0 1 0-135.764l6.911-6.91a96 96 0 0 1 135.713-.051l38.093 38.787l38.274-38.736a96 96 0 0 1 135.765 0l6.91 6.909a96.11 96.11 0 0 1-.004 135.765z" /></svg>
-        </div>
-      </router-link>
-    </div>
-    <div class="flex items-end hover:text-[#adff2f] dark:text-[#adff2f] relative" style="filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));" @click="openNav">
+  <div class="flex justify-center items-center text-white dark:text-black">
+    <div class="mr-5 flex items-end hover:text-[#adff2f] dark:text-[#adff2f] relative" style="filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));" @click="openNav">
       <span class="total-notifications absolute -top-2 left-5 bg-green-500 w-5 h-5 text-white rounded-full flex justify-center items-center pr-0.5 text-xs font-medium">{{ cart.result.length }}</span>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><circle cx="13.33" cy="29.75" r="2.25" class="clr-i-outline clr-i-outline-path-1" fill="currentColor" /><circle cx="27" cy="29.75" r="2.25" class="clr-i-outline clr-i-outline-path-2" fill="currentColor" /><path d="M33.08 5.37a1 1 0 0 0-.77-.37H11.49l.65 2H31l-2.67 12h-15L8.76 4.53a1 1 0 0 0-.66-.65L4 2.62a1 1 0 1 0-.59 1.92L7 5.64l4.59 14.5l-1.64 1.34l-.13.13A2.66 2.66 0 0 0 9.74 25A2.75 2.75 0 0 0 12 26h16.69a1 1 0 0 0 0-2H11.84a.67.67 0 0 1-.56-1l2.41-2h15.44a1 1 0 0 0 1-.78l3.17-14a1 1 0 0 0-.22-.85z" class="clr-i-outline clr-i-outline-path-3" fill="currentColor" /></svg>
       <h1 class="font-semibold ml-3">
-        ${{ floorNumber(cart.result.reduce((accum,item) => accum + item.total_price, 0)) }}
+        {{ floorNumber(cart.result.reduce((accum,item) => accum + item.quantity, 0)) }}
       </h1>
     </div>
-    <div class="mx-5">
+    <div>
       <router-link to="#">
-        <img v-if="avatarID" :src="getResources(avatarID)" alt="avatar_img" class="rounded-full w-12 min-w-12 max-w-12 h-12 min-h-12 max-h-12 border-2 border-blue-500" style="object-fit: cover;filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));">
-        <img v-else class="w-12 min-w-12 max-w-12 h-12 min-h-12 max-h-12 rounded-full shadow-lg shadow-gray-500/50" src="/img/avatar_sample.png" alt="avatar_sample">
+        <img v-if="avatarID" :src="getResources(avatarID)" alt="avatar_img" class="rounded-full w-10 min-w-10 max-w-10 h-10 min-h-10 max-h-10 border-2 border-blue-500" style="object-fit: cover;filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));">
+        <img v-else class="w-10 min-w-10 max-w-10 h-10 min-h-10 max-h-10 rounded-full shadow-lg shadow-gray-500/50" src="/img/avatar_sample.png" alt="avatar_sample">
       </router-link>
     </div>
     <div v-if="isBlurBgModal" class="blur-bg w-screen h-screen absolute top-0 -left-10 bg-black bg-opacity-30 z-1" @click="closeNav" />
     <div id="mySidenav" class="sidenav w-0 h-screen fixed top-12 right-0 bg-white duration-500 z-2 overflow-x-hidden text-left text-black dark:(text-gray-200 bg-black) divide-light-700 divide-y border-1 border-dotted border-gray-700 shadow-2xl shadow-gray-500">
       <div class="flex justify-between items-center p-5">
-        <p class="font-semibold">cart</p>
+        <p class="font-semibold capitalize">cart</p>
         <span class="cursor-pointer text-4xl" @click="closeNav">&times;</span>
       </div>
       <ul class="minicart-product-list divide-light-700 divide-y max-h-1/2 overflow-y-scroll">
@@ -107,31 +91,26 @@ const handleOrder = async() => {
               <!-- <img
                 src="/img/product/1.png" alt="cart_product_img" class="max-w-25 max-h-25 border-light-600 border-solid border-1 rounded-md mr-3"
               > -->
-              <img
-                :src="getResources(item.product.images[0])" alt="cart_product_img" class="max-w-25 max-h-25 border-light-600 border-solid border-1 rounded-md mr-3"
+              <img :src="item.product?.image" alt="cart_product_img" class="max-w-25 max-h-25 border-light-600 border-solid border-1 rounded-md mr-3"
               >
             </a>
             <div>
               <h5 class="title text-[#E14641] cursor-pointer">
-                {{ item.product.name }}
+                {{ item?.productId }}
               </h5>
-              <span class="quantity-price">{{ item.quantity }} x <span class="price">${{ item.total_price }}</span></span>
+              <span class="quantity-price">{{ item?.quantity }}</span>
             </div>
           </div>
-          <span class="remove hover:text-red-500 cursor-pointer ml-2" @click="handleDelete(item.product_model_id)">×</span>
+          <span class="remove hover:text-red-500 cursor-pointer ml-2" @click="handleDelete(item?.productId)">×</span>
         </li>
       </ul>
       <div class="flex flex-wrap justify-between p-5">
         <strong>Sub total :</strong>
-        <span class="amount font-semibold">${{ floorNumber(cart.result.reduce((accum,item) => accum + item.total_price, 0)) }}</span>
+        <span class="amount font-semibold">{{ floorNumber(cart.result.reduce((accum,item) => accum + item?.quantity, 0)) }}</span>
       </div>
       <div class="flex justify-around items-center p-5">
-        <router-link to="/buyer/cart">
-          <button type="submit" value="submit" class="btn text-white font-semibold text-xs py-3 px-7 rounded-md duration-200 uppercase cursor-pointer">V iew Cart</button>
-        </router-link>
-        <button type="submit" value="submit" class="bg-black text-white font-semibold text-xs py-3 px-7 rounded-md hover:bg-[#E14641] duration-200 uppercase cursor-pointer" @click="handleOrder">Checkout</button>
+        <button type="submit" value="submit" class="bg-black text-white font-semibold text-xs py-3 px-7 rounded-md hover:bg-[#E14641] duration-200 uppercase cursor-pointer" @click="handleOrder">Buy Now</button>
       </div>
-      <p class="minicart-message p-5 text-xs">Free Ship $1000!</p>
     </div>
   </div>
 </template>

@@ -1,9 +1,14 @@
 import AxiosInstance from './axios-instance.js'
 
 class UserRequest {
-  getUsers(params) {
-    const url = '/users/'
-    return AxiosInstance.get(url, { params })
+  getUsers() {
+    const url = '/users';
+    return AxiosInstance.get(url);
+  }
+
+  getUsersById(userId) {
+    const url = `/users/${userId}`;
+    return AxiosInstance.get(url);
   }
 }
 export default new UserRequest()

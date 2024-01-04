@@ -10,11 +10,6 @@ import { handleDate } from '@/utils/date';
 import { productStatus } from '@/utils/status';
 import { sliceText } from '@/utils/textHandle';
 import { getResources } from '@/utils/resources';
-import ShopRequest from '@/services/shop-request';
-import ProductRequest from '@/services/product-request';
-import AccountRequest from '@/services/account-request';
-import CartRequest from '@/services/cart-request';
-import OrderRequest from '@/services/order-request';
 
 const router = useRouter()
 const useToast = toast()

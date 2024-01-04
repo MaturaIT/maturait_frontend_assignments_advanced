@@ -1,8 +1,8 @@
 
 <script>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { mapMutations } from 'vuex';
-  import { fakestoreApi } from '@/api/fakestoreApi';
+  import ProductRequest from '@/services/product-request'
   import CProductCardGrid from '@/components/CProductCardGrid.vue';
   import RProductCardGrid from '@/components/RProductCardGrid.vue';
 
@@ -15,7 +15,7 @@
     data() {
       return {
         loading: true,
-        products: [],
+        products: ref([]),
         searchQuery: "",
       };
     },
@@ -28,20 +28,12 @@
     },
     methods: {
       async fetchProducts() {
-        try {
-          this.loading = true;
-          this.products = await fakestoreApi.getProducts();
-        } catch (error) {
-          console.error(error);
-        } finally {
-          this.loading = false;
-        }
       },
       addToCart(product) {
         this.$store.commit('addToCart', product);
       },
     },
-    mounted() {
+    watch() {
       this.fetchProducts();
     },
   };
