@@ -24,7 +24,7 @@ const EncodedUriC = (categoryname: string) => ({
       <span v-if="isLoading">
         <LoaderComponent />
       </span>
-      <span v-if="isError" class="">
+      <span v-if="isError">
         <ErrorComponent />
       </span>
       <ul

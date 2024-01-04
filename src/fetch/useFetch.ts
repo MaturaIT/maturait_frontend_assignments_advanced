@@ -10,3 +10,8 @@ export const fetchAllCategories = async (): Promise<Categories[]> => {
   const response = await axios.get('https://fakestoreapi.com/products/categories')
   return response.data
 }
+
+export const topArrival = async (limit: number): Promise<Product[]> => {
+  const response = await axios.get(`https://fakestoreapi.com/products?limit=${limit}`)
+  return response.data
+}
