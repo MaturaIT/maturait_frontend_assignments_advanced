@@ -1,5 +1,12 @@
 <script setup lang="ts"></script>
 
+<!-- App.vue -->
 <template>
-  <h1 className="text-3xl">Hello world!</h1>
+  <router-view class="max-w-screen-2xl mx-auto"/>
 </template>
+
+<script>
+export default {
+};
+</script>
+
