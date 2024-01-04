@@ -15,7 +15,9 @@ const { isLoading, isError, data } = useQuery<Product[]>(['topArrival', numberOf
 </script>
 <template>
   <div class="container pb-16">
-    <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">top new arrival</h2>
+    <h2 class="text-2xl font-medium text-gray-800 dark:text-white uppercase mb-6 mt-2">
+      top new arrival
+    </h2>
     <span v-if="isLoading">
       <LoaderComponent />
     </span>
