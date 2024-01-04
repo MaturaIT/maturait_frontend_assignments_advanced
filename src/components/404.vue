@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'NotFoundComoponent',
+}
+</script>
+
 <template>
   <div class="error_container">
     <div id="error-page">

@@ -1,4 +1,3 @@
-
 <script>
 import Brand from '@/components/head/Brand.vue';
 import MenuItem from '@/components/head/MenuItem.vue';
@@ -6,6 +5,7 @@ import Search from '@/components/head/Search.vue';
 import CBList from '@/components/head/CBList.vue';
 
 export default {
+  name: 'NavbarComponent',
   components: {
     Brand,
     Search,

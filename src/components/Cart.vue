@@ -1,3 +1,8 @@
+<script>
+export default {
+  name: 'CartComoponent',
+}
+</script>
 <script setup>
 import { ref } from 'vue';
 

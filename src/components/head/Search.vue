@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'SearchComoponent',
+}
+</script>
+
 <script setup>
 import { keyword } from '@/stores/keyword'
 import { ref } from 'vue'

@@ -28,12 +28,20 @@
     },
     methods: {
       async fetchProducts() {
+        try {
+          this.loading = true;
+          this.products = await ProductRequest.searchProducts();
+        } catch (error) {
+          console.error(error);
+        } finally {
+          this.loading = false;
+        }
       },
       addToCart(product) {
         this.$store.commit('addToCart', product);
       },
     },
-    watch() {
+    mounted() {
       this.fetchProducts();
     },
   };
