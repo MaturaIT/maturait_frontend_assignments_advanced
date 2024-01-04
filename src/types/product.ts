@@ -11,4 +11,6 @@ export type Product = {
   title: string
 }
 
-export type Categories = 'electronics' | 'jewelry' | "men's clothing" | "women's clothing"
+export type Categories = 'electronics' | 'jewelry' | "men's clothing" | "women's clothing" | ''
+
+export type PriceTypeOrder = 'asc' | 'desc'

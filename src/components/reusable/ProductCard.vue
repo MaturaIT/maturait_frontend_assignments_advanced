@@ -44,7 +44,5 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 const { product } = defineProps(['product'])
 </script>
