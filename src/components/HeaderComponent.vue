@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import ThemeToggler from './darkmode/ThemeToggler.vue'
 import { ref } from 'vue'
 
 const isDropdownOpen = ref(false)
 
-const cartItems = []
+const cartItems: any = []
 </script>
 
 <template>

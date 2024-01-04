@@ -9,6 +9,7 @@ const router = useRouter()
 
 const searchHandler: SearchHandlerType = () => {
   router.push({ name: 'products', query: { s: searchValue.value } })
+  searchValue.value = ''
 }
 </script>
 <template>
