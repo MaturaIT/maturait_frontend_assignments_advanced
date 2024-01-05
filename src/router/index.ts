@@ -4,6 +4,7 @@ import CheckoutPage from '@/views/CheckoutPage.vue'
 import ProductPage from '@/views/ProductPage.vue'
 import MainVue from '@/views/MainVue.vue'
 import SingleProduct from '@/views/SingleProduct.vue'
+import WishList from '@/views/WishList.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -17,7 +18,8 @@ const routes: RouteRecordRaw[] = [
         name: 'cart'
       },
       { path: 'products', component: ProductPage, name: 'products' },
-      { path: 'products/:id', component: SingleProduct, name: 'single product' }
+      { path: 'products/:id', component: SingleProduct, name: 'single product' },
+      { path: 'wishlist', name: 'wishlist', component: WishList }
     ]
   }
 ]

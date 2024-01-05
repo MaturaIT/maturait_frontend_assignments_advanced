@@ -38,11 +38,12 @@
       </div>
     </div>
   </div>
-  <router-link
-    :to="{ name: 'single product', params: { id: product.id } }"
+  <button
+    @click="store.onAdd(product, 1)"
     class="flex justify-center w-full py-1 text-center text-gray-700 bg-primary border border-primary rounded-b hover:bg-transparent transition"
-    >Add to cart</router-link
   >
+    Add to cart >
+  </button>
 </template>
 
 <script setup lang="ts">

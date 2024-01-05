@@ -12,7 +12,7 @@ const cartRef = useLocalStorage<Product[]>('cart', [])
 export const useStore = defineStore('store', {
   state: () => ({
     showCart: false,
-    cartItems: cartRef.value ? cartRef.value : ([] as Product[]),
+    cartItems: cartRef.value.length > 0 ? cartRef.value : ([] as Product[]),
     totalPrice: 0,
     totalQuantities: 0,
     qty: 1,
@@ -27,14 +27,15 @@ export const useStore = defineStore('store', {
       if (ProductInCart) {
         instance = $toast.info('Product already in cart', { duration: 3000 })
       } else {
-        product.quantity = quantity
+        product = { ...product, quantity: quantity }
         this.totalPrice += product.price * quantity
         this.totalQuantities += quantity
-        this.cartItems.push({ ...product })
+        this.cartItems = [...this.cartItems, product]
         instance = $toast.success(`${this.qty} of ${product.title} added to the cart`, {
           duration: 3000
         })
       }
+      cartRef.value = [...this.cartItems]
       this.qty = 1
     },
 
@@ -44,8 +45,12 @@ export const useStore = defineStore('store', {
       if (ProductInCart) {
         this.totalPrice -= ProductInCart.price * ProductInCart.quantity!
         this.totalQuantities -= ProductInCart.quantity!
-        this.cartItems = this.cartItems.filter((item) => item.id !== product.id)
+        const updatedCart = this.cartItems.filter((item) => item.id !== product.id)
+        this.cartItems = updatedCart
+        instance = $toast.success(`${product.title} removed from the cart`, { duration: 3000 })
       }
+
+      cartRef.value = [...this.cartItems]
     },
 
     toggleCartItemQuantity(id: number, value: string) {

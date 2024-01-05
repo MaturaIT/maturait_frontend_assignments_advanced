@@ -5,12 +5,20 @@ import { watch, ref } from 'vue'
 const store = useStore()
 
 const isWishlisted = ref(Boolean(store.$state.wishlist.find((i) => i.id === singleproduct.id)))
+const quantity = ref<number>(store.$state.qty)
 
 watch(
   () => store.$state.wishlist,
   (newWishList) => {
     const isItemInWishList = Boolean(newWishList.some((item) => item.id === singleproduct.id))
     isWishlisted.value = isItemInWishList
+  }
+)
+
+watch(
+  () => store.$state.qty,
+  (newQuantity) => {
+    quantity.value = newQuantity
   }
 )
 </script>
@@ -30,6 +38,7 @@ watch(
           <div class="flex -mx-2 mb-4">
             <div class="w-1/2 px-2">
               <button
+                @click="store.onAdd(singleproduct, store.$state.qty)"
                 class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
               >
                 Add to Cart
@@ -85,6 +94,7 @@ watch(
           <div class="my-2">
             <div class="inline-flex items-center mt-2">
               <button
+                @click="store.decQty()"
                 class="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
               >
                 <svg
@@ -105,9 +115,10 @@ watch(
               <div
                 class="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none"
               >
-                2
+                {{ store.$state.qty }}
               </div>
               <button
+                @click="store.incQty()"
                 class="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
               >
                 <svg
