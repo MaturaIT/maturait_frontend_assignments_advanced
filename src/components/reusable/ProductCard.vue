@@ -32,7 +32,7 @@
     <div class="flex flex-col gap-1">
       <div class="text-xs text-gray-500">reviews: {{ product.rating.count }}</div>
       <div class="flex gap-1 text-sm text-yellow-500 font-semibold">
-        rating: {{ product.rating.rate }}
+        rating: {{ product.rating.rate }} / 5.0
       </div>
     </div>
   </div>
