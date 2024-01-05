@@ -117,7 +117,7 @@ const isDropdownOpen = ref(false)
               v-if="cartItems.length > 0"
               class="text-white bg-blue-600 hover:bg-blue-700 dark:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
-              <router-link to="/cart">Checkout</router-link>
+              <router-link to="/cart">Cart</router-link>
             </button>
           </div>
         </div>

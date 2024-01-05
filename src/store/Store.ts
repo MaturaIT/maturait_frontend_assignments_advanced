@@ -10,10 +10,17 @@ const wishlistRef = useLocalStorage<Product[]>('wishlist', [], {})
 const cartRef = useLocalStorage<Product[]>('cart', [])
 
 export const useStore = defineStore('store', {
+  getters: {
+    totalPrice: (state) => {
+      return state.cartItems.reduce((total, product) => {
+        return total + product.price * (product.quantity || 1)
+      }, 0)
+    }
+  },
   state: () => ({
+    readyToCheckout: false,
     showCart: false,
     cartItems: cartRef.value.length > 0 ? cartRef.value : ([] as Product[]),
-    totalPrice: 0,
     totalQuantities: 0,
     qty: 1,
     showMiniCart: false,
@@ -28,7 +35,7 @@ export const useStore = defineStore('store', {
         instance = $toast.info('Product already in cart', { duration: 3000 })
       } else {
         product = { ...product, quantity: quantity }
-        this.totalPrice += product.price * quantity
+        // this.totalPrice += product.price * quantity
         this.totalQuantities += quantity
         this.cartItems = [...this.cartItems, product]
         instance = $toast.success(`${this.qty} of ${product.title} added to the cart`, {
@@ -43,7 +50,7 @@ export const useStore = defineStore('store', {
       const ProductInCart = this.cartItems.find((item) => item.id === product.id)
 
       if (ProductInCart) {
-        this.totalPrice -= ProductInCart.price * ProductInCart.quantity!
+        // this.totalPrice -= ProductInCart.price * ProductInCart.quantity!
         this.totalQuantities -= ProductInCart.quantity!
         const updatedCart = this.cartItems.filter((item) => item.id !== product.id)
         this.cartItems = updatedCart
@@ -60,7 +67,6 @@ export const useStore = defineStore('store', {
         if (value === 'inc') {
           if (ProductInCart.quantity! < 10) {
             ProductInCart.quantity! += 1
-            this.totalPrice += ProductInCart.price
             this.totalQuantities += 1
           } else {
             instance = $toast.error('You can not add more that 10 of the same item', {
@@ -70,7 +76,6 @@ export const useStore = defineStore('store', {
         } else if (value === 'dec') {
           if (ProductInCart.quantity! > 1) {
             ProductInCart.quantity! -= 1
-            this.totalPrice -= ProductInCart.price
             this.totalQuantities -= 1
           }
         }
@@ -108,6 +113,14 @@ export const useStore = defineStore('store', {
       }
 
       this.wishlist = this.wishlist.filter((item) => item.id !== product.id)
+    },
+
+    changeToCheckout() {
+      this.readyToCheckout = true
+    },
+
+    resetChangeToCheckout() {
+      this.readyToCheckout = false
     }
   }
 })
