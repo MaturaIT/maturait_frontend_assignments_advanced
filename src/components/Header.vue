@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['openDrawer'])
+
+const props = defineProps(['cartItemsCount'])
 </script>
 
 <template>
@@ -16,7 +18,7 @@ const emit = defineEmits(['openDrawer'])
         class="flex items-center gap-3 cursor-pointer text-slate-500 hover:text-black"
       >
         <img src="/cart.svg" alt="Cart" />
-        <b>0</b>
+        <b>{{ cartItemsCount }}</b>
       </li>
     </ul>
   </header>

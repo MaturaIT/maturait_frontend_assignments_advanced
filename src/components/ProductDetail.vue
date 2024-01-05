@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ref, onMounted, defineProps } from 'vue'
 import type { Product } from '../utils/types'
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'addToCart'])
 const product = ref<Product | null>(null)
 
 const fetchProduct = async () => {
@@ -12,6 +12,12 @@ const fetchProduct = async () => {
     product.value = data
   } catch (error) {
     console.error('Error', error)
+  }
+}
+
+const handleAddToCart = () => {
+  if (product.value) {
+    props.addToCart(product.value)
   }
 }
 
@@ -38,6 +44,7 @@ onMounted(() => {
 
       <button
         class="bg-blue-500 text-white px-4 py-2 rounded-full focus:outline-none hover:bg-blue-900 transition-colors"
+        @click="handleAddToCart"
       >
         Add to cart
       </button>
