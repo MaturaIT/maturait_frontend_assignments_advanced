@@ -1,5 +1,18 @@
 <script setup lang="ts">
 const { singleproduct } = defineProps(['singleproduct'])
+import { useStore } from '@/store/Store'
+import { watch, ref } from 'vue'
+const store = useStore()
+
+const isWishlisted = ref(Boolean(store.$state.wishlist.find((i) => i.id === singleproduct.id)))
+
+watch(
+  () => store.$state.wishlist,
+  (newWishList) => {
+    const isItemInWishList = Boolean(newWishList.some((item) => item.id === singleproduct.id))
+    isWishlisted.value = isItemInWishList
+  }
+)
 </script>
 
 <template>
@@ -24,9 +37,11 @@ const { singleproduct } = defineProps(['singleproduct'])
             </div>
             <div class="w-1/2 px-2">
               <button
+                @click="store.addToWishlist(singleproduct)"
+                :class="{ 'bg-red-200': isWishlisted }"
                 class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600"
               >
-                Add to Wishlist
+                Wishlist
               </button>
             </div>
           </div>

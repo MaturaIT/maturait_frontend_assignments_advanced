@@ -9,6 +9,7 @@ export type Product = {
     count: number
   }
   title: string
+  quantity?: number
 }
 
 export type Categories = 'electronics' | 'jewelry' | "men's clothing" | "women's clothing" | ''

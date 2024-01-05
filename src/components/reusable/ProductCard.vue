@@ -16,7 +16,9 @@
       <p class="text-lg font-semibold">{{ product.price.toFixed(2) }}$</p>
       <span>
         <svg
-          class="hover:border-b-2 border-black cursor-pointer"
+          @click="store.addToWishlist(product)"
+          class="border-black cursor-pointer"
+          :class="{ 'border-b-2': isWishlisted }"
           width="24"
           height="24"
           xmlns="http://www.w3.org/2000/svg"
@@ -45,4 +47,17 @@
 
 <script setup lang="ts">
 const { product } = defineProps(['product'])
+import { useStore } from '@/store/Store'
+import { watch, ref } from 'vue'
+const store = useStore()
+
+const isWishlisted = ref(Boolean(store.$state.wishlist.find((i) => i.id === product.id)))
+
+watch(
+  () => store.$state.wishlist,
+  (newWishList) => {
+    const isItemInWishList = Boolean(newWishList.some((item) => item.id === product.id))
+    isWishlisted.value = isItemInWishList
+  }
+)
 </script>
