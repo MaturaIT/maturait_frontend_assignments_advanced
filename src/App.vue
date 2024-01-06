@@ -1,12 +1,10 @@
 <template>
   <div>
-    <NavigationBar :sharedState="sharedState" />
+    <NavigationBar :sharedState="sharedState"/>
     <!-- Dropdown with the cart contents and checkout button, containing animation, 
         using reactive state with a boolean to get information about cart button being clicked
         from the NavigationBar component -->
-    <transition name="fade">
-      <CartItems v-if="sharedState.showCart" />
-    </transition>
+    <CartItems v-if="sharedState.showCart" />
     <ProductList />
   </div>
 </template>
@@ -30,14 +28,3 @@ function incrementCartItems() {
   store.commit('incrementCartItems')
 }
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  @apply transition-opacity duration-500 ease-out;
-}
-.fade-enter-from,
-.fade-leave-to {
-  @apply opacity-0;
-}
-</style>

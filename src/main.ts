@@ -16,7 +16,6 @@ interface CartItem {
   price: number
 }
 
-// I'm going to use products page as the main page, to avoid adding unnecessary main page with no valuable content :)
 const app = createApp(App)
 
 // vuex store, for storing number of items in cart and sharing it between components
