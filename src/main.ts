@@ -23,11 +23,7 @@ const app = createApp(ProductList)
 const store = createStore({
   state: {
     cartItemsCount: 0,
-    cartItems: [
-      { name: 'Item 1', price: 10 },
-      { name: 'Item 2', price: 20 },
-      { name: 'Item 3', price: 30 }
-    ] as CartItem[]
+    cartItems: [] as CartItem[]
   },
   mutations: {
     incrementCartItems(state) {
