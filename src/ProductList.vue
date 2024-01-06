@@ -1,7 +1,7 @@
 <template>
   <!-- Loading indicator -->
   <div
-    v-if="loading"
+    v-if="sharedState.loading"
     class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
   >
     <div class="loading-spinner"></div>
@@ -54,9 +54,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { useStore } from 'vuex'
-import { useQuery } from 'vue-query'
+
+interface SharedState {
+  showCart: boolean,
+  loading: boolean,
+  products: {
+    data: Product[]
+  }
+}
 
 interface Product {
   name: string
@@ -65,45 +72,20 @@ interface Product {
   rating: number
 }
 
-const store = useStore()
-
-let loading = ref(false)
 const search = ref('')
-
-function incrementCartItems() {
-  store.commit('incrementCartItems')
-}
-
-function toggleLoading() {
-  loading.value = !loading.value
-}
-
-const products = useQuery('products', async () => {
-  toggleLoading()
-  const response = await fetch('https://fakestoreapi.com/products')
-  const responseData = await response.json()
-  let products = [] as Product[]
-  for (const product of responseData) {
-    products.push({
-      name: product.title,
-      price: product.price,
-      image: product.image,
-      rating: product.rating.rate
-    })
-  }
-  toggleLoading()
-  return products
-})
-
-console.log(products.data.value)
-
+const store = useStore()
+const sharedState = inject('sharedState') as SharedState
 const filteredProducts = computed(() =>
-  products.data.value
-    ? products.data.value.filter((item) =>
+  sharedState.products.data
+    ? sharedState.products.data.filter((item) =>
         item.name.toLocaleLowerCase().includes(search.value.toLowerCase())
       )
     : []
 )
+
+function incrementCartItems() {
+  store.commit('incrementCartItems')
+}
 </script>
 
 <style>

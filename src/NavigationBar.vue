@@ -24,12 +24,22 @@ import { computed, ref, inject } from 'vue'
 import { useStore } from 'vuex'
 
 interface SharedState {
-  showCart: boolean
+  showCart: boolean,
+  products: {
+    data: Product[]
+  }
+}
+
+interface Product {
+  name: string
+  price: number
+  image: string
+  rating: number
 }
 
 const store = useStore()
-const sharedState = inject('sharedState') as SharedState
 const showCart = ref(false)
+const sharedState = inject('sharedState') as SharedState
 const cartItemsCount = computed(() => store.state.cartItemsCount)
 
 function toggleCart() {
