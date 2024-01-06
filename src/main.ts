@@ -1,8 +1,18 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import './index.css'
+import ToastPlugin from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-bootstrap.css'
+import router from './router/index'
+import { VueQueryPlugin } from 'vue-query'
 
 import App from './App.vue'
 
-const app = createApp(App)
+const pinia = createPinia()
 
+const app = createApp(App)
+app.use(pinia)
+app.use(router)
+app.use(VueQueryPlugin)
+app.use(ToastPlugin)
 app.mount('#app')
