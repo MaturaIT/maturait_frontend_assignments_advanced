@@ -1,6 +1,9 @@
 <template>
   <!-- Loading indicator -->
-  <div v-if="loading" class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50">
+  <div
+    v-if="loading"
+    class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
+  >
     <div class="loading-spinner"></div>
   </div>
   <div v-else>
@@ -53,6 +56,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useQuery } from 'vue-query'
 
 interface Product {
   name: string
@@ -63,7 +67,6 @@ interface Product {
 
 const store = useStore()
 
-let products = ref([] as Product[])
 let loading = ref(false)
 const search = ref('')
 
@@ -75,12 +78,13 @@ function toggleLoading() {
   loading.value = !loading.value
 }
 
-async function fetchData() {
+const products = useQuery('products', async () => {
   toggleLoading()
   const response = await fetch('https://fakestoreapi.com/products')
   const responseData = await response.json()
+  let products = [] as Product[]
   for (const product of responseData) {
-    products.value.push({
+    products.push({
       name: product.title,
       price: product.price,
       image: product.image,
@@ -88,14 +92,17 @@ async function fetchData() {
     })
   }
   toggleLoading()
-}
+  return products
+})
 
-fetchData()
+console.log(products.data.value)
 
 const filteredProducts = computed(() =>
-  products.value.filter((item) =>
-    item.name.toLocaleLowerCase().includes(search.value.toLowerCase())
-  )
+  products.data.value
+    ? products.data.value.filter((item) =>
+        item.name.toLocaleLowerCase().includes(search.value.toLowerCase())
+      )
+    : []
 )
 </script>
 
@@ -110,7 +117,11 @@ const filteredProducts = computed(() =>
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

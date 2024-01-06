@@ -18,6 +18,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "pinia": "^2.1.7",
     "vue": "^3.3.10",
+    "vue-query": "^1.26.0",
     "vue-router": "^4.2.5",
     "vuex": "^4.1.0"
   },

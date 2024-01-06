@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
+import { VueQueryPlugin } from 'vue-query'
 import './index.css'
 
 // Custom icons
@@ -39,4 +40,5 @@ const store = createStore({
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(store)
+app.use(VueQueryPlugin);
 app.mount('#app')
