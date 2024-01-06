@@ -16,31 +16,33 @@ const fetchProducts = async () => {
   }
 }
 
-onMounted(() => {
-  fetchProducts()
-})
-
 const filteredProducts = computed(() => {
   const term = searchTerm.value.toLowerCase()
   return products.value.filter((product) => product.title.toLowerCase().includes(term))
+})
+
+const oldPrice = (price: number): number => {
+  const increasedPrice = price * 1.1
+  return Math.round(increasedPrice * 100) / 100
+}
+
+onMounted(() => {
+  fetchProducts()
 })
 </script>
 
 <template>
   <div>
-    <div>
-      <div class="flex justify-between items-center">
-        <h1 class="text-xl font-bold uppercase m-8">Our products</h1>
+    <div class="md:flex md:justify-between md:items-center">
+      <h1 class="text-xl font-bold uppercase m-8">Our products</h1>
 
-        <div class="relative">
-          <img class="absolute right-4 top-3" src="/search.svg" />
-          <input
-            v-model="searchTerm"
-            class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
-            placeholder="search"
-            type="text"
-          />
-        </div>
+      <div class="relative md:ml-auto mb-4 md:mb-0">
+        <input
+          v-model="searchTerm"
+          class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
+          placeholder="search"
+          type="text"
+        />
       </div>
     </div>
 
@@ -52,23 +54,28 @@ const filteredProducts = computed(() => {
       No result.
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div v-auto-animate class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       <router-link
         v-for="product in filteredProducts"
         :key="product.id"
         :to="{ name: 'product-detail', params: { id: product.id } }"
         class="bg-white p-4 border border-slate-300 rounded-lg cursor-pointer transform transition-transform hover:scale-105"
       >
-        <div class="aspect-w-1 aspect-h-1">
+        <div class="aspect-w-1 aspect-h-1 items-center">
           <img
             :src="product.image"
             :alt="product.title"
-            class="object-cover rounded-md w-full h-full"
+            class="object-cover rounded-md w-34 h-28 ml-auto mr-auto"
           />
         </div>
-        <div class="mt-4">
+        <div class="mt-4 text-center">
           <h3 class="text-md font-semibold mb-2">{{ product.title }}</h3>
-          <p class="text-gray-700">Price: {{ product.price }}$</p>
+          <p class="text-gray-700">
+            <span class="line-through text-gray-500">{{ oldPrice(product.price) }}$</span>
+            <br />
+            <span class="text-red-600">{{ product.price }}$</span>
+          </p>
+          <p class="text-sm text-gray-700">Rating: {{ product.rating.rate }}/5</p>
         </div>
       </router-link>
     </div>

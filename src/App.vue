@@ -15,12 +15,13 @@ const closeDrawer = () => {
 }
 
 const addToCart = (product: Product) => {
-  ;(cartItems.value as Product[]).push(product)
+  cartItems.value.push(product)
+
   localStorage.setItem('cartItems', JSON.stringify(cartItems.value))
 }
 
 const removeFromCart = (index: number) => {
-  ;(cartItems.value as Product[]).splice(index, 1)
+  cartItems.value.splice(index, 1)
 
   localStorage.setItem('cartItems', JSON.stringify(cartItems.value))
 }
