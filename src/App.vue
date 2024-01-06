@@ -1,13 +1,14 @@
 <template>
   <div>
-    <NavigationBar :sharedState="sharedState" />
+    <NavigationBar />
     <!-- Dropdown with the cart contents and checkout button, containing animation, 
         using reactive state with a boolean to get information about cart button being clicked
         from the NavigationBar component -->
     <CartItems v-if="sharedState.showCart" />
     <Transition name="fade">
-      <ProductList />
+      <ProductList v-if="list" />
     </Transition>
+    <ProductDetails v-if="details"/>
   </div>
 </template>
 
@@ -17,14 +18,31 @@ import { useStore } from 'vuex'
 import { useQuery } from 'vue-query'
 import NavigationBar from './NavigationBar.vue'
 import ProductList from './ProductList.vue'
+import ProductDetails from './ProductDetails.vue'
 import CartItems from './CartItems.vue'
 
-interface Product {
+export interface Product {
+  id: number,
   name: string
   price: number
   image: string
-  rating: number
+  rating: {
+    rate: number
+    count: number
+  }
+  description: string
 }
+
+export interface SharedState {
+  showCart: boolean
+  loading: boolean
+  products: {
+    data: Product[]
+  }
+}
+
+const list = ref(false)
+const details = ref(!false)
 
 const store = useStore()
 const loading = ref(false)
@@ -38,10 +56,15 @@ const sharedState = reactive({
     let products = [] as Product[]
     for (const product of responseData) {
       products.push({
+        id: product.id,
         name: product.title,
         price: product.price,
         image: product.image,
-        rating: product.rating.rate
+        rating: {
+          rate: product.rating.rate,
+          count: product.rating.count
+        },
+        description: product.description
       })
     }
     toggleLoading()
@@ -49,7 +72,7 @@ const sharedState = reactive({
   }, {
     staleTime: 5 * 60 * 1000,
     cacheTime: 24 * 60 * 60 * 1000
-  })
+  }),
 })
 
 provide('sharedState', sharedState)

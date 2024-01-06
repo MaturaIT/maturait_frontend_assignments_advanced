@@ -34,17 +34,8 @@
           <div class="p-4 absolute bottom-0">
             <p class="mt-1 text-gray-700">${{ product.price }}</p>
             <div class="flex items-center mt-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-yellow-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  d="M10 12.585l-4.417 2.695 1.06-4.923L2.93 7.715l4.923-.426L10 2.93l2.147 4.358 4.923.426-3.713 3.642 1.06 4.923z"
-                />
-              </svg>
-              <span class="ml-1 text-gray-700">{{ product.rating }}</span>
+              <font-awesome-icon icon="star" class="text-yellow-500 text-lg" />
+              <span class="ml-1 text-gray-700">{{ product.rating.rate }}</span>
             </div>
           </div>
         </div>
@@ -56,21 +47,7 @@
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue'
 import { useStore } from 'vuex'
-
-interface SharedState {
-  showCart: boolean,
-  loading: boolean,
-  products: {
-    data: Product[]
-  }
-}
-
-interface Product {
-  name: string
-  price: number
-  image: string
-  rating: number
-}
+import { type SharedState } from './App.vue'
 
 const search = ref('')
 const store = useStore()

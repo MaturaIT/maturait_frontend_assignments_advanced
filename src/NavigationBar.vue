@@ -22,20 +22,7 @@
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue'
 import { useStore } from 'vuex'
-
-interface SharedState {
-  showCart: boolean,
-  products: {
-    data: Product[]
-  }
-}
-
-interface Product {
-  name: string
-  price: number
-  image: string
-  rating: number
-}
+import { type SharedState } from './App.vue'
 
 const store = useStore()
 const showCart = ref(false)
