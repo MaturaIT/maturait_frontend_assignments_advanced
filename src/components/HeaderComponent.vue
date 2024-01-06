@@ -92,7 +92,7 @@ const isDropdownOpen = ref(false)
             :key="index"
             class="flex items-center justify-center gap-3 px-4"
           >
-            <img :src="item.image" alt="Product" class="w-full h-20 rounded-md" />
+            <img :src="item.image" alt="Product" class="object-contain w-20 h-20" />
             <div class="flex flex-col justify-between items-center">
               <div class="flex gap-2">
                 <span class="text-md font-semibold text-yellow-500">
@@ -113,12 +113,14 @@ const isDropdownOpen = ref(false)
             </button>
           </div>
           <div class="flex items-center justify-center">
-            <button
-              v-if="cartItems.length > 0"
-              class="text-white bg-blue-600 hover:bg-blue-700 dark:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-            >
-              <router-link to="/cart">Cart</router-link>
-            </button>
+            <router-link to="/cart">
+              <button
+                v-if="cartItems.length > 0"
+                class="text-white bg-blue-600 hover:bg-blue-700 dark:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+              >
+                Cart
+              </button>
+            </router-link>
           </div>
         </div>
       </div>

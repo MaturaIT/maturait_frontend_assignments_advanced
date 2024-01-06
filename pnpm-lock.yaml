@@ -17,6 +17,9 @@ dependencies:
   vue:
     specifier: ^3.3.10
     version: 3.3.10(typescript@5.2.2)
+  vue-confetti-explosion:
+    specifier: ^1.0.2
+    version: 1.0.2(vue@3.3.10)
   vue-query:
     specifier: ^1.26.0
     version: 1.26.0(react@18.2.0)(vue@3.3.10)
@@ -3093,6 +3096,15 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /vue-confetti-explosion@1.0.2(vue@3.3.10):
+    resolution: {integrity: sha512-80OboM3/6BItIoZ6DpNcZFqGpF607kjIVc5af56oKgtFmt5yWehvJeoYhkzYlqxrqdBe0Ko4Ie3bWrmLau+dJw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.0.5
+    dependencies:
+      vue: 3.3.10(typescript@5.2.2)
+    dev: false
 
   /vue-demi@0.10.1(vue@3.3.10):
     resolution: {integrity: sha512-L6Oi+BvmMv6YXvqv5rJNCFHEKSVu7llpWWJczqmAQYOdmPPw5PNYoz1KKS//Fxhi+4QP64dsPjtmvnYGo1jemA==}

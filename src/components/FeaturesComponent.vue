@@ -8,8 +8,8 @@
           />
         </svg>
         <div>
-          <h4 class="font-medium capitalize text-lg">Free Shipping</h4>
-          <p class="text-gray-500 text-sm">Order over $200</p>
+          <h4 class="font-medium capitalize text-lg">Shipping</h4>
+          <p class="text-gray-500 text-sm">Only 4.99$</p>
         </div>
       </div>
       <div class="bg-white border rounded-sm px-3 py-6 flex justify-center items-center gap-5">
@@ -25,7 +25,7 @@
           />
         </svg>
         <div>
-          <h4 class="font-medium capitalize text-lg">Money Rturns</h4>
+          <h4 class="font-medium capitalize text-lg">Money Returns</h4>
           <p class="text-gray-500 text-sm">30 days money returs</p>
         </div>
       </div>

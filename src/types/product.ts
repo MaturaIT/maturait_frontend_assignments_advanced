@@ -21,3 +21,12 @@ export interface Comments {
   text: string
   timestamp: string
 }
+
+export type customerInformation = {
+  FirstName: string
+  LastName: string
+  Email: string
+  Address: string
+  City: string
+  Postcode: number
+}

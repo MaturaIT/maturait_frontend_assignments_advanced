@@ -42,7 +42,11 @@ function toCheckout() {
           :key="index"
           class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
         >
-          <img :src="item.image" alt="product image" class="w-full rounded-lg sm:w-40" />
+          <img
+            :src="item.image"
+            alt="product image"
+            class="w-full rounded-md sm:w-40 object-contain h-40"
+          />
           <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
             <div class="mt-5 sm:mt-0">
               <h2 class="text-lg font-bold text-gray-900">{{ item.title.trim().slice(0, 20) }}</h2>
@@ -133,7 +137,7 @@ function toCheckout() {
           @click="toCheckout"
           class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
         >
-          Check out
+          Checkout
         </button>
       </div>
     </div>

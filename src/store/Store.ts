@@ -1,4 +1,4 @@
-import { type Product } from '@/types/product'
+import { type Product, type customerInformation } from '@/types/product'
 import { defineStore } from 'pinia'
 import { useToast } from 'vue-toast-notification'
 import { useLocalStorage } from '@vueuse/core'
@@ -8,6 +8,7 @@ let instance
 
 const wishlistRef = useLocalStorage<Product[]>('wishlist', [], {})
 const cartRef = useLocalStorage<Product[]>('cart', [])
+const customerInfo = useLocalStorage<customerInformation>('customer', [])
 
 export const useStore = defineStore('store', {
   getters: {
@@ -18,6 +19,10 @@ export const useStore = defineStore('store', {
     }
   },
   state: () => ({
+    customerInformation:
+      customerInfo.value !== null
+        ? (customerInfo.value as customerInformation)
+        : ({} as customerInformation),
     readyToCheckout: false,
     showCart: false,
     cartItems: cartRef.value.length > 0 ? cartRef.value : ([] as Product[]),
@@ -121,6 +126,16 @@ export const useStore = defineStore('store', {
 
     resetChangeToCheckout() {
       this.readyToCheckout = false
+    },
+
+    AddCustomerInformation(information: customerInformation) {
+      this.customerInformation = information
+      customerInfo.value = { ...this.customerInformation }
+    },
+
+    ResetAfterPurchase() {
+      cartRef.value = []
+      this.cartItems = []
     }
   }
 })
