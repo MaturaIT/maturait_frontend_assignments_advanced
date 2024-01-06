@@ -6,11 +6,11 @@
         <a href="/" class="text-main-text font-mono text-lg font-bold">MaturaIT Shop</a>
       </div>
       <div class="ml-4 flex items-center md:ml-6 space-x-1 relative">
-        <!-- Display the number of products in the basket next to the icon, 
-            to make it a little bit more clear I used the v-if directive to only render
-            the paragraph if there is at least one item in the cart -->
-        <p v-if="cartItemsCount > 0" class="text-main-text">{{ cartItemsCount }}</p>
-        <a class="border border-main-text rounded px-4 py-2 cursor-pointer" @click="toggleCart">
+        <a class="border border-main-text rounded px-4 py-2 cursor-pointer text-main-text" @click="toggleCart">
+          <!-- Display the number of products in the basket next to the icon, 
+              to make it a little bit more clear only display the number if there are
+              actually items in the cart -->
+          {{ cartItemsCount > 0 ? cartItemsCount : "" }}
           <!-- Shopping cart icon -->
           <font-awesome-icon icon="shopping-cart" class="text-main-text text-lg" />
         </a>
