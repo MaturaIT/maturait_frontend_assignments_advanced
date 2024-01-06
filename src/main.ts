@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faShoppingCart)
 
-import ProductList from './ProductList.vue'
+import App from './App.vue'
 
 interface CartItem {
   name: string
@@ -17,7 +17,7 @@ interface CartItem {
 }
 
 // I'm going to use products page as the main page, to avoid adding unnecessary main page with no valuable content :)
-const app = createApp(ProductList)
+const app = createApp(App)
 
 // vuex store, for storing number of items in cart and sharing it between components
 const store = createStore({
