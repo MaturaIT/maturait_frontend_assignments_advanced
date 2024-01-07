@@ -1,10 +1,6 @@
-<!-- One -->
 <template>
   <div>
     <NavigationBar />
-    <!-- Dropdown with the cart contents and checkout button, containing animation, 
-        using reactive state with a boolean to get information about cart button being clicked
-        from the NavigationBar component -->
     <CartItems v-if="sharedState.showCart && !sharedState.checkout" />
     <Transition name="fade">
       <ProductList v-if="sharedState.list" />
@@ -62,8 +58,6 @@ export interface CartItem {
 const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
 
 if (!cartItems) LocalStorage.set('cartItems', [])
-
-const showCart = ref(false)
 
 const cartItemsCount = () => {
   if (cartItems.length > 0) {

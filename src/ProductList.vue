@@ -1,5 +1,4 @@
 <template>
-  <!-- Loading indicator -->
   <div
     v-if="sharedState.loading"
     class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
@@ -56,7 +55,7 @@ const filteredProducts = computed(() =>
   sharedState.products.data
     ? sharedState.products.data.filter((item) =>
         item.name.toLocaleLowerCase().includes(search.value.toLowerCase())
-      )
+      ).sort((a, b) => a.price - b.price)
     : []
 )
 

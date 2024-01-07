@@ -2,7 +2,6 @@
   <nav class="bg-main-background shadow">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between h-16">
       <div class="flex-shrink-0 flex items-center">
-        <!-- Title, will open the main page on click -->
         <p @click="openMainPage" class="text-main-text font-mono text-lg font-bold cursor-pointer">MaturaIT Shop</p>
       </div>
       <div class="ml-4 flex items-center md:ml-6 space-x-1 relative">
@@ -10,13 +9,9 @@
           class="flex border border-main-text rounded cursor-pointer text-main-text"
           @click="toggleCart"
         >
-          <!-- Display the number of products in the basket next to the icon, 
-              to make it a little bit more clear only display the number if there are
-              actually items in the cart -->
           <p v-if="sharedState.cartItemsCount > 0" class="pr-2 pl-4 py-3">
             {{ sharedState.cartItemsCount }}
           </p>
-          <!-- Shopping cart icon -->
           <font-awesome-icon
             icon="shopping-cart"
             class="text-main-text text-lg pr-4 py-4"

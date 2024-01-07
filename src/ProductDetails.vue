@@ -1,5 +1,4 @@
 <template>
-  <!-- Loading indicator -->
   <div
     v-if="sharedState.loading"
     class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
