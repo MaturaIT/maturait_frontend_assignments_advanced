@@ -53,7 +53,8 @@ function addToCart(item: Product) {
       id: item.id,
       name: item.name,
       price: item.price,
-      quantity: 1
+      quantity: 1,
+      image: item.image
     })
     LocalStorage.set('cartItems', cartItems)
   }

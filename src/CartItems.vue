@@ -7,25 +7,19 @@
         <li
           v-for="item in cartItems"
           :key="item.id"
-          class="mx-auto bg-gray-800 p-4 justify-between border rounded text-center"
+          class="flex grid pt-2 mx-auto bg-gray-800 p-4 border rounded text-center"
         >
           <span class="text-main-text">{{ item.name }} ({{ item.quantity }})</span>
-          <div class="pt-2 flex justify-between">
             <span class="text-main-text">${{ (item.price * item.quantity).toFixed(2) }}</span>
-          <font-awesome-icon
-            @click="removeFromCart(item)"
-            icon="x"
-            class="float-right pt-1 text-red-500 cursor-pointer"
-          />
-          </div>
         </li>
         <p v-if="cartItems.length === 0" class="text-main-text text-center">No items</p>
       </ul>
       <div class="px-2">
-        <p class="absolute py-6 text-main-text float-left" v-if="totalPrice > 0">
+        <p class="absolute py-6 text-main-text float-left" v-if="cartItems && cartItems.length > 0">
           ${{ totalPrice.toFixed(2) }}
         </p>
         <button
+          @click="openCheckoutPage"
           class="float-right font-bold py-2 px-4 mt-4 rounded"
           :class="{
             'bg-blue-500 hover:bg-blue-700 text-main-text': cartItems && cartItems.length > 0,
@@ -47,6 +41,7 @@ import { LocalStorage } from 'quasar'
 
 const sharedState = inject('sharedState') as SharedState
 const itemAdded = inject('itemAdded') as Ref
+const checkout = ref(false)
 
 const cartItems = ref(
   LocalStorage.getItem('cartItems') ? (LocalStorage.getItem('cartItems') as CartItem[]) : []
@@ -64,7 +59,6 @@ itemAdded.value = {
 }
 
 if (cartItems.value.length > 0) {
-  totalPrice.value = 0
   for (const item of cartItems.value) {
     totalPrice.value += item.price * item.quantity
   }
@@ -84,5 +78,15 @@ function removeFromCart(item: CartItem) {
   totalPrice.value -= item.price * item.quantity
   sharedState.cartItemsCount -= item.quantity
   sharedState.cartItems = cartItemsUpdated
+}
+
+function openCheckoutPage() {
+  if (cartItems.value.length > 0) {
+    sharedState.showCart = false
+    checkout.value = true
+    sharedState.list = false
+    sharedState.details = false
+    sharedState.checkout = checkout.value
+  }
 }
 </script>

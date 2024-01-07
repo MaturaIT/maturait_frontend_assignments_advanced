@@ -1,14 +1,16 @@
+<!-- One -->
 <template>
   <div>
     <NavigationBar />
     <!-- Dropdown with the cart contents and checkout button, containing animation, 
         using reactive state with a boolean to get information about cart button being clicked
         from the NavigationBar component -->
-    <CartItems v-if="sharedState.showCart" />
+    <CartItems v-if="sharedState.showCart && !sharedState.checkout" />
     <Transition name="fade">
       <ProductList v-if="sharedState.list" />
     </Transition>
     <ProductDetails @item-added="update" v-if="sharedState.details" />
+    <CheckoutPage v-if="sharedState.checkout" />
   </div>
 </template>
 
@@ -19,6 +21,7 @@ import { useQuery } from 'vue-query'
 
 import ProductDetails from './ProductDetails.vue'
 import NavigationBar from './NavigationBar.vue'
+import CheckoutPage from './CheckoutPage.vue'
 import ProductList from './ProductList.vue'
 import CartItems from './CartItems.vue'
 
@@ -39,6 +42,7 @@ export interface SharedState {
   loading: boolean
   list: boolean
   details: boolean
+  checkout: boolean
   productId: number
   products: {
     data: Product[]
@@ -52,11 +56,14 @@ export interface CartItem {
   name: string
   price: number
   quantity: number
+  image: string
 }
 
 const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
 
 if (!cartItems) LocalStorage.set('cartItems', [])
+
+const showCart = ref(false)
 
 const cartItemsCount = () => {
   if (cartItems.length > 0) {
@@ -77,6 +84,7 @@ const sharedState = reactive({
   loading: loading,
   list: true,
   details: false,
+  checkout: false,
   productId: 0,
   products: useQuery(
     'products',

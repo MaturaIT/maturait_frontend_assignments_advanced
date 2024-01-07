@@ -11,7 +11,7 @@
       <div class="absolute left-1/4 w-1/2">
         <!-- Search bar for products -->
         <input
-          class="shadow-md text-center bg-white rounded-lg w-full"
+          class="shadow-md text-center bg-main-text rounded-lg w-full"
           type="text"
           v-model="search"
           placeholder="Search"
@@ -50,7 +50,6 @@ import { computed, ref, inject } from 'vue'
 import { type SharedState } from './App.vue'
 
 const search = ref('')
-const list = ref(true)
 const details = ref(false)
 const sharedState = inject('sharedState') as SharedState
 const filteredProducts = computed(() =>
@@ -62,11 +61,11 @@ const filteredProducts = computed(() =>
 )
 
 function openProductPage(productId: number) {
-  list.value = !list.value
-  details.value = !details.value
+  details.value = true
   sharedState.productId = productId - 1
-  sharedState.list = list.value
+  sharedState.list = false
   sharedState.details = details.value
+  sharedState.checkout = false
 }
 </script>
 

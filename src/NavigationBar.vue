@@ -1,9 +1,9 @@
 <template>
   <nav class="bg-main-background shadow">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-between h-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between h-16">
       <div class="flex-shrink-0 flex items-center">
-        <!-- Title with the link to home page-->
-        <a href="/" class="text-main-text font-mono text-lg font-bold">MaturaIT Shop</a>
+        <!-- Title, will open the main page on click -->
+        <p @click="openMainPage" class="text-main-text font-mono text-lg font-bold cursor-pointer">MaturaIT Shop</p>
       </div>
       <div class="ml-4 flex items-center md:ml-6 space-x-1 relative">
         <a
@@ -40,5 +40,12 @@ function toggleCart() {
   showCart.value = !showCart.value
   cartItemsCount.value = sharedState.cartItemsCount
   sharedState.showCart = showCart.value
+}
+
+function openMainPage() {
+  sharedState.list = true
+  sharedState.details = false
+  sharedState.checkout = false
+  sharedState.showCart = false
 }
 </script>
