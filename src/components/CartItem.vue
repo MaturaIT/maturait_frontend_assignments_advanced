@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
+
 const props = defineProps(['item'])
 const emit = defineEmits(['removeFromCart'])
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-
 const emit = defineEmits(['closeDrawer'])
 </script>
 

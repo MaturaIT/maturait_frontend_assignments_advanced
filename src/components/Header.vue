@@ -18,7 +18,7 @@ const props = defineProps(['cartItemsCount'])
         class="flex items-center gap-3 cursor-pointer text-slate-500 hover:text-black"
       >
         <img src="/cart.svg" alt="Cart" />
-        <b>{{ cartItemsCount }}</b>
+        <b>{{ props.cartItemsCount }}</b>
       </li>
     </ul>
   </header>

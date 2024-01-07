@@ -12,7 +12,7 @@ const fetchProducts = async () => {
 
     products.value = data
   } catch (error) {
-    console.error('Error fetching products:', error)
+    console.error('Error', error)
   }
 }
 
