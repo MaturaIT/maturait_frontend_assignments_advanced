@@ -53,7 +53,7 @@
                       <div class="text-sm text-gray-900">{{ item.quantity }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      ${{ item.quantity * item.price }}
+                      ${{ (item.quantity * item.price).toFixed(2) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <font-awesome-icon
@@ -89,6 +89,8 @@ import { type CartItem, type SharedState } from './App.vue'
 import { inject, ref } from 'vue'
 import { LocalStorage } from 'quasar'
 
+const emit = defineEmits(['cart-empty'])
+
 const sharedState = inject('sharedState') as SharedState
 
 const cartItems = ref(
@@ -119,9 +121,10 @@ function removeFromCart(item: CartItem) {
   sharedState.cartItems = cartItemsUpdated
 
   if (cartItemsUpdated.length === 0) {
+    sharedState.list = true
     sharedState.checkout = false
     sharedState.details = false
-    sharedState.list = true
+    emit('cart-empty')
   }
 }
 </script>

@@ -1,12 +1,13 @@
 <template>
   <div>
+    <notifications position="bottom right" width="200" />
     <NavigationBar />
-    <CartItems v-if="sharedState.showCart && !sharedState.checkout" />
+    <CartItems v-if="(sharedState.showCart && !sharedState.checkout) || sharedState.showCart" />
     <Transition name="fade">
       <ProductList v-if="sharedState.list" />
     </Transition>
     <ProductDetails @item-added="update" v-if="sharedState.details" />
-    <CheckoutPage v-if="sharedState.checkout" />
+    <CheckoutPage @cart-empty="cartEmpty" v-if="sharedState.checkout" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 import { provide, reactive, ref, type Ref } from 'vue'
 import { LocalStorage } from 'quasar'
 import { useQuery } from 'vue-query'
+import { notify } from '@kyvg/vue3-notification'
 
 import ProductDetails from './ProductDetails.vue'
 import NavigationBar from './NavigationBar.vue'
@@ -45,6 +47,7 @@ export interface SharedState {
   }
   cartItems: CartItem[]
   cartItemsCount: number
+  favorites: number[]
 }
 
 export interface CartItem {
@@ -56,8 +59,10 @@ export interface CartItem {
 }
 
 const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
+const favorites = LocalStorage.getItem('favorites') as number[]
 
 if (!cartItems) LocalStorage.set('cartItems', [])
+if (!favorites) LocalStorage.set('favorites', [])
 
 const cartItemsCount = () => {
   if (cartItems.length > 0) {
@@ -80,6 +85,7 @@ const sharedState = reactive({
   details: false,
   checkout: false,
   productId: 0,
+  favorites: favorites,
   products: useQuery(
     'products',
     async () => {
@@ -124,6 +130,13 @@ function update() {
   if (itemAdded.value) {
     itemAdded.value.updateCartItems()
   }
+}
+
+function cartEmpty() {
+  notify({
+    type: 'error',
+    title: 'Removed all items from cart!'
+  })
 }
 </script>
 

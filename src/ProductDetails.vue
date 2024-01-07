@@ -1,4 +1,5 @@
 <template>
+  <notifications position="bottom right" width="200" />
   <div
     v-if="sharedState.loading"
     class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
@@ -18,13 +19,29 @@
         >
       </div>
     </div>
-    <div class="left-1/2">
+    <div class="flex grid place-items-center">
       <button
-        @click="addToCart(product), $emit('item-added')"
-        class="font-bold py-2 w-32 rounded bg-blue-500 hover:bg-blue-700 text-main-text"
+        @click="
+          addToCart(product),
+            $emit('item-added'),
+            notify({
+              type: 'success',
+              title: 'Added item to cart!'
+            })
+        "
+        class="font-bold py-2 w-32 rounded bg-blue-500 hover:bg-blue-700 text-main-text mb-4 transition duration-300 ease-in-out transform hover:-translate-y-1"
       >
         Add to cart
       </button>
+      <font-awesome-icon
+        @click="toggleFavorites(product.id), $emit('item-added')"
+        icon="heart"
+        class="text-5xl hover:text-red-500 transition duration-300 ease-in-out flex-row transform hover:-translate-y-1 cursor-pointer"
+        :class="{
+          'text-red-500': sharedState.favorites.includes(product.id),
+          'text-gray-600': !sharedState.favorites.includes(product.id)
+        }"
+      />
     </div>
   </div>
 </template>
@@ -33,10 +50,12 @@
 import { computed, inject, ref } from 'vue'
 import { LocalStorage } from 'quasar'
 import { type SharedState, type Product, type CartItem } from './App.vue'
+import { notify } from '@kyvg/vue3-notification'
 
 const product = computed(() => sharedState.products.data[sharedState.productId])
 const sharedState = inject('sharedState') as SharedState
 const cartItemsCount = ref(sharedState.cartItemsCount)
+const favoritesRef = ref(sharedState.favorites)
 
 function addToCart(item: Product) {
   const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
@@ -62,5 +81,26 @@ function addToCart(item: Product) {
   cartItemsCount.value++
   sharedState.cartItemsCount = cartItemsCount.value
   sharedState.cartItems = cartItems
+}
+
+function toggleFavorites(id: number) {
+  const favorites = LocalStorage.getItem('favorites') as number[]
+  const index = favorites.indexOf(id)
+  if (index !== -1) {
+    favorites.splice(index, 1)
+    notify({
+      type: 'warn',
+      title: 'Removed item from favorites!'
+    })
+  } else {
+    favorites.push(id)
+    notify({
+      type: 'success',
+      title: 'Added item to favorites!'
+    })
+  }
+  LocalStorage.set('favorites', favorites)
+  sharedState.favorites = favorites
+  favoritesRef.value = favorites
 }
 </script>

@@ -64,22 +64,6 @@ if (cartItems.value.length > 0) {
   }
 }
 
-function removeFromCart(item: CartItem) {
-  const cartItemsUpdated = LocalStorage.getItem('cartItems') as CartItem[]
-
-  const index = cartItemsUpdated.findIndex((obj) => obj.id === item.id)
-
-  if (index !== -1) {
-    cartItemsUpdated.splice(index, 1)
-  }
-
-  LocalStorage.set('cartItems', cartItemsUpdated)
-  cartItems.value = cartItemsUpdated
-  totalPrice.value -= item.price * item.quantity
-  sharedState.cartItemsCount -= item.quantity
-  sharedState.cartItems = cartItemsUpdated
-}
-
 function openCheckoutPage() {
   if (cartItems.value.length > 0) {
     sharedState.showCart = false

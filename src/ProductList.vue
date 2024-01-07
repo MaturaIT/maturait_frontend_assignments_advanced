@@ -6,9 +6,8 @@
     <div class="loading-spinner"></div>
   </div>
   <div v-else>
-    <ul class="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 top-20 absolute p-8">
+    <ul class="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 top-20 absolute p-8">
       <div class="absolute left-1/4 w-1/2">
-        <!-- Search bar for products -->
         <input
           class="shadow-md text-center bg-main-text rounded-lg w-full"
           type="text"
@@ -20,13 +19,18 @@
         v-for="product in filteredProducts"
         :key="product.name"
         @click="openProductPage(product.id)"
-        class="bg-white rounded-lg shadow-md overflow-hidden curs cursor-pointer"
+        class="bg-white rounded-lg shadow-md overflow-hidden curs cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
       >
-        <img
-          :src="product.image"
-          :alt="product.name"
-          class="h-64 transform scale-100 object-contain mx-auto p-4"
-        />
+        <div>
+          <img
+            :src="product.image"
+            :alt="product.name"
+            class="h-64 transform scale-100 object-contain mx-auto p-4"
+          />
+          <div v-if="sharedState.favorites.includes(product.id)" class="absolute top-2 right-2">
+            <font-awesome-icon icon="heart" class="text-red-500 text-3xl" />
+          </div>
+        </div>
         <div class="flex flex-col relative h-48">
           <div class="p-4 relative">
             <h2 class="text-sm font-semibold text-gray-900">{{ product.name }}</h2>
@@ -53,9 +57,9 @@ const details = ref(false)
 const sharedState = inject('sharedState') as SharedState
 const filteredProducts = computed(() =>
   sharedState.products.data
-    ? sharedState.products.data.filter((item) =>
-        item.name.toLocaleLowerCase().includes(search.value.toLowerCase())
-      ).sort((a, b) => a.price - b.price)
+    ? sharedState.products.data
+        .filter((item) => item.name.toLocaleLowerCase().includes(search.value.toLowerCase()))
+        .sort((a, b) => (sharedState.favorites.includes(a.id) === sharedState.favorites.includes(b.id)) ? a.price - b.price : sharedState.favorites.indexOf(a.id) !== -1 ? -1 : 1)
     : []
 )
 
