@@ -6,16 +6,16 @@
         from the NavigationBar component -->
     <CartItems v-if="sharedState.showCart" />
     <Transition name="fade">
-      <ProductList v-if="list" />
+      <ProductList v-if="sharedState.list" />
     </Transition>
-    <ProductDetails v-if="details"/>
+    <ProductDetails v-if="sharedState.details"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import { provide, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
 import { useQuery } from 'vue-query'
+import { LocalStorage } from 'quasar'
 import NavigationBar from './NavigationBar.vue'
 import ProductList from './ProductList.vue'
 import ProductDetails from './ProductDetails.vue'
@@ -36,19 +36,44 @@ export interface Product {
 export interface SharedState {
   showCart: boolean
   loading: boolean
+  list: boolean,
+  details: boolean,
+  productId: number,
   products: {
     data: Product[]
   }
+  cartItemsCount: number
 }
 
-const list = ref(false)
-const details = ref(!false)
+export interface CartItem {
+  id: number
+  name: string
+  price: number
+  quantity: number
+}
 
-const store = useStore()
+const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
+
+if (!cartItems) LocalStorage.set('cartItems', [])
+
+const cartItemsCount = () => {
+  if (cartItems.length > 0) {
+    let items = 0
+    for (const item of cartItems) {
+      items += item.quantity
+    }
+    return items
+  }
+  return 0
+}
+
 const loading = ref(false)
 const sharedState = reactive({
   showCart: false,
   loading: loading,
+  list: true,
+  details: false,
+  productId: 0,
   products: useQuery('products', async () => {
     toggleLoading()
     const response = await fetch('https://fakestoreapi.com/products')
@@ -73,16 +98,13 @@ const sharedState = reactive({
     staleTime: 5 * 60 * 1000,
     cacheTime: 24 * 60 * 60 * 1000
   }),
+  cartItemsCount: cartItemsCount()
 })
 
 provide('sharedState', sharedState)
 
 function toggleLoading() {
   loading.value = !loading.value
-}
-
-function incrementCartItems() {
-  store.commit('incrementCartItems')
 }
 </script>
 

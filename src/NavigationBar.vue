@@ -6,13 +6,20 @@
         <a href="/" class="text-main-text font-mono text-lg font-bold">MaturaIT Shop</a>
       </div>
       <div class="ml-4 flex items-center md:ml-6 space-x-1 relative">
-        <a class="border border-main-text rounded px-4 py-2 cursor-pointer text-main-text" @click="toggleCart">
+        <a
+          class="flex border border-main-text rounded cursor-pointer text-main-text"
+          @click="toggleCart"
+        >
           <!-- Display the number of products in the basket next to the icon, 
               to make it a little bit more clear only display the number if there are
               actually items in the cart -->
-          {{ cartItemsCount > 0 ? cartItemsCount : "" }}
+          <p v-if="sharedState.cartItemsCount > 0" class="pr-2 pl-4 py-3">{{ sharedState.cartItemsCount }}</p>
           <!-- Shopping cart icon -->
-          <font-awesome-icon icon="shopping-cart" class="text-main-text text-lg" />
+          <font-awesome-icon
+            icon="shopping-cart"
+            class="text-main-text text-lg pr-4 py-4"
+            :class="{ 'pl-4': sharedState.cartItemsCount === 0 }"
+          />
         </a>
       </div>
     </div>
@@ -20,14 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject } from 'vue'
-import { useStore } from 'vuex'
+import { ref, inject, computed } from 'vue'
+import { LocalStorage } from 'quasar'
 import { type SharedState } from './App.vue'
 
-const store = useStore()
 const showCart = ref(false)
 const sharedState = inject('sharedState') as SharedState
-const cartItemsCount = computed(() => store.state.cartItemsCount)
 
 function toggleCart() {
   showCart.value = !showCart.value

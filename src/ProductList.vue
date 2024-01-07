@@ -20,7 +20,8 @@
       <li
         v-for="product in filteredProducts"
         :key="product.name"
-        class="bg-white rounded-lg shadow-md overflow-hidden"
+        @click="openProductPage(product.id)"
+        class="bg-white rounded-lg shadow-md overflow-hidden curs cursor-pointer"
       >
         <img
           :src="product.image"
@@ -46,11 +47,11 @@
 
 <script setup lang="ts">
 import { computed, ref, inject } from 'vue'
-import { useStore } from 'vuex'
 import { type SharedState } from './App.vue'
 
 const search = ref('')
-const store = useStore()
+const list = ref(true)
+const details = ref(false)
 const sharedState = inject('sharedState') as SharedState
 const filteredProducts = computed(() =>
   sharedState.products.data
@@ -60,8 +61,12 @@ const filteredProducts = computed(() =>
     : []
 )
 
-function incrementCartItems() {
-  store.commit('incrementCartItems')
+function openProductPage(productId: number) {
+  list.value = !list.value
+  details.value = !details.value
+  sharedState.productId = productId - 1
+  sharedState.list = list.value
+  sharedState.details = details.value
 }
 </script>
 
