@@ -13,7 +13,9 @@
           <!-- Display the number of products in the basket next to the icon, 
               to make it a little bit more clear only display the number if there are
               actually items in the cart -->
-          <p v-if="sharedState.cartItemsCount > 0" class="pr-2 pl-4 py-3">{{ sharedState.cartItemsCount }}</p>
+          <p v-if="sharedState.cartItemsCount > 0" class="pr-2 pl-4 py-3">
+            {{ sharedState.cartItemsCount }}
+          </p>
           <!-- Shopping cart icon -->
           <font-awesome-icon
             icon="shopping-cart"
@@ -27,15 +29,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
-import { LocalStorage } from 'quasar'
+import { ref, inject } from 'vue'
 import { type SharedState } from './App.vue'
 
-const showCart = ref(false)
 const sharedState = inject('sharedState') as SharedState
+const cartItemsCount = ref(sharedState.cartItemsCount)
+const showCart = ref(false)
 
 function toggleCart() {
   showCart.value = !showCart.value
+  cartItemsCount.value = sharedState.cartItemsCount
   sharedState.showCart = showCart.value
 }
 </script>

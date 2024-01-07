@@ -21,7 +21,7 @@
     </div>
     <div class="left-1/2">
       <button
-        @click="addToCart(product)"
+        @click="addToCart(product), $emit('item-added')"
         class="font-bold py-2 w-32 rounded bg-blue-500 hover:bg-blue-700 text-main-text"
       >
         Add to cart
@@ -35,15 +35,15 @@ import { computed, inject, ref } from 'vue'
 import { LocalStorage } from 'quasar'
 import { type SharedState, type Product, type CartItem } from './App.vue'
 
-const sharedState = inject('sharedState') as SharedState
-
-const cartItemsCount = ref(sharedState.cartItemsCount)
-
 const product = computed(() => sharedState.products.data[sharedState.productId])
+const sharedState = inject('sharedState') as SharedState
+const cartItemsCount = ref(sharedState.cartItemsCount)
 
 function addToCart(item: Product) {
   const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
-  const existingItemCheck = cartItems ? cartItems.find((cartItem: CartItem) => cartItem.id === item.id) : null
+  const existingItemCheck = cartItems
+    ? cartItems.find((cartItem: CartItem) => cartItem.id === item.id)
+    : null
 
   if (existingItemCheck) {
     existingItemCheck.quantity++
@@ -58,7 +58,9 @@ function addToCart(item: Product) {
     LocalStorage.set('cartItems', cartItems)
   }
 
+  cartItemsCount.value = sharedState.cartItemsCount
   cartItemsCount.value++
   sharedState.cartItemsCount = cartItemsCount.value
+  sharedState.cartItems = cartItems
 }
 </script>
