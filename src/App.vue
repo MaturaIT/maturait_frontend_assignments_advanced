@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import { provide, reactive, ref, type Ref } from 'vue'
+import { notify } from '@kyvg/vue3-notification'
 import { LocalStorage } from 'quasar'
 import { useQuery } from 'vue-query'
-import { notify } from '@kyvg/vue3-notification'
 
 import ProductDetails from './ProductDetails.vue'
 import NavigationBar from './NavigationBar.vue'
@@ -60,6 +60,8 @@ export interface CartItem {
 
 const cartItems = LocalStorage.getItem('cartItems') as CartItem[]
 const favorites = LocalStorage.getItem('favorites') as number[]
+const itemAdded: Ref<null | { updateCartItems: () => void }> = ref(null)
+const loading = ref(false)
 
 if (!cartItems) LocalStorage.set('cartItems', [])
 if (!favorites) LocalStorage.set('favorites', [])
@@ -74,9 +76,6 @@ const cartItemsCount = () => {
   }
   return 0
 }
-
-const itemAdded: Ref<null | { updateCartItems: () => void }> = ref(null)
-const loading = ref(false)
 
 const sharedState = reactive({
   showCart: false,

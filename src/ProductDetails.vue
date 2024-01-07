@@ -47,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue'
-import { LocalStorage } from 'quasar'
 import { type SharedState, type Product, type CartItem } from './App.vue'
 import { notify } from '@kyvg/vue3-notification'
+import { computed, inject, ref } from 'vue'
+import { LocalStorage } from 'quasar'
 
 const product = computed(() => sharedState.products.data[sharedState.productId])
 const sharedState = inject('sharedState') as SharedState
@@ -86,6 +86,7 @@ function addToCart(item: Product) {
 function toggleFavorites(id: number) {
   const favorites = LocalStorage.getItem('favorites') as number[]
   const index = favorites.indexOf(id)
+
   if (index !== -1) {
     favorites.splice(index, 1)
     notify({
@@ -99,6 +100,7 @@ function toggleFavorites(id: number) {
       title: 'Added item to favorites!'
     })
   }
+
   LocalStorage.set('favorites', favorites)
   sharedState.favorites = favorites
   favoritesRef.value = favorites

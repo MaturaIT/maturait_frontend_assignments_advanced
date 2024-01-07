@@ -1,10 +1,17 @@
 <template>
-  <nav class="bg-main-background shadow">
+  <nav class="bg-main-background">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between h-16">
       <div class="flex-shrink-0 flex items-center">
-        <p @click="openMainPage" class="text-main-text font-mono text-lg font-bold cursor-pointer  transition duration-300 ease-in-out transform hover:scale-105">MaturaIT Shop</p>
+        <p
+          @click="openMainPage"
+          class="text-main-text font-mono text-lg font-bold cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+        >
+          MaturaIT Shop
+        </p>
       </div>
-      <div class="ml-4 flex items-center md:ml-6 space-x-1 relative transition duration-300 ease-in-out transform hover:scale-105">
+      <div
+        class="ml-4 flex items-center md:ml-6 space-x-1 relative transition duration-300 ease-in-out transform hover:scale-105"
+      >
         <a
           class="flex border border-main-text rounded cursor-pointer text-main-text"
           @click="toggleCart"
@@ -25,16 +32,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue'
-import { type SharedState } from './App.vue'
 import { onClickOutside } from '@vueuse/core'
+import { type SharedState } from './App.vue'
+import { ref, inject } from 'vue'
 
 const sharedState = inject('sharedState') as SharedState
 const cartItemsCount = ref(sharedState.cartItemsCount)
-
 const cart = ref(null)
 
-onClickOutside(cart, () => sharedState.showCart = false)
+onClickOutside(cart, () => (sharedState.showCart = false))
 
 function toggleCart() {
   cartItemsCount.value = sharedState.cartItemsCount

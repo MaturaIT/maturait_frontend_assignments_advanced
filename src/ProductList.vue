@@ -6,7 +6,9 @@
     <div class="loading-spinner"></div>
   </div>
   <div v-else>
-    <ul class="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 top-20 absolute p-8">
+    <ul
+      class="w-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 top-20 absolute p-8"
+    >
       <div class="absolute left-1/4 w-1/2">
         <input
           class="shadow-md text-center bg-main-text rounded-lg w-full"
@@ -49,17 +51,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject } from 'vue'
 import { type SharedState } from './App.vue'
+import { computed, ref, inject } from 'vue'
 
-const search = ref('')
-const details = ref(false)
 const sharedState = inject('sharedState') as SharedState
+const details = ref(false)
+const search = ref('')
+
 const filteredProducts = computed(() =>
   sharedState.products.data
     ? sharedState.products.data
         .filter((item) => item.name.toLocaleLowerCase().includes(search.value.toLowerCase()))
-        .sort((a, b) => (sharedState.favorites.includes(a.id) === sharedState.favorites.includes(b.id)) ? a.price - b.price : sharedState.favorites.indexOf(a.id) !== -1 ? -1 : 1)
+        .sort((a, b) =>
+          sharedState.favorites.includes(a.id) === sharedState.favorites.includes(b.id)
+            ? a.price - b.price
+            : sharedState.favorites.indexOf(a.id) !== -1
+            ? -1
+            : 1
+        )
     : []
 )
 

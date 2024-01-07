@@ -1,29 +1,27 @@
 <template>
-  <div class="max-w-7xl mx-auto sm:px-5 lg:px-7 flex justify-between h-16">
-    <div
-      class="right-0 ml-auto mt-auto bg-main-background border border-main-text rounded shadow-md p-4 z-10"
-    >
+  <div class="text-main-text text-center max-w-7xl mx-auto sm:px-5 lg:px-7 flex">
+    <div class="ml-auto bg-main-background border border-main-text rounded shadow-md p-4 z-10">
       <ul>
         <li
           v-for="item in cartItems"
           :key="item.id"
-          class="flex grid pt-2 mx-auto bg-gray-800 p-4 border rounded text-center"
+          class="grid bg-gray-800 p-4 border border-gray-600 rounded"
         >
-          <span class="text-main-text">{{ item.name }} ({{ item.quantity }})</span>
-            <span class="text-main-text">${{ (item.price * item.quantity).toFixed(2) }}</span>
+          <span>{{ item.name }} ({{ item.quantity }})</span>
+          <span>${{ (item.price * item.quantity).toFixed(2) }}</span>
         </li>
-        <p v-if="cartItems.length === 0" class="text-main-text text-center">No items</p>
+        <p v-if="cartItems.length === 0">No items</p>
       </ul>
-      <div class="px-2">
-        <p class="absolute py-6 text-main-text float-left" v-if="cartItems && cartItems.length > 0">
+      <div>
+        <p class="absolute py-6" v-if="cartItems && cartItems.length > 0">
           ${{ totalPrice.toFixed(2) }}
         </p>
         <button
           @click="openCheckoutPage"
           class="float-right font-bold py-2 px-4 mt-4 rounded"
           :class="{
-            'bg-blue-500 hover:bg-blue-700 text-main-text': cartItems && cartItems.length > 0,
-            'disabled bg-gray-800 text-gray-600 cursor-not-allowed':
+            'bg-blue-500 hover:bg-blue-700': cartItems && cartItems.length > 0,
+            'disabled bg-gray-700 text-gray-500 cursor-not-allowed':
               !cartItems || cartItems.length === 0
           }"
         >
@@ -42,12 +40,11 @@ import { LocalStorage } from 'quasar'
 const sharedState = inject('sharedState') as SharedState
 const itemAdded = inject('itemAdded') as Ref
 const checkout = ref(false)
+let totalPrice = ref(0)
 
 const cartItems = ref(
   LocalStorage.getItem('cartItems') ? (LocalStorage.getItem('cartItems') as CartItem[]) : []
 )
-
-let totalPrice = ref(0)
 
 itemAdded.value = {
   updateCartItems: () => {

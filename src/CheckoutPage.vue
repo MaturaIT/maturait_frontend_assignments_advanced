@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-gray-100 w-screen absolute top-16">
-    <div class="max-w-7xl mx-auto py-6 px-6 lg:px-8">
+  <div class="w-screen absolute top-16">
+    <div class="max-w-7xl mx-auto py-6 px-6">
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 align-middle inline-block min-w-full px-6 lg:px-8">
@@ -31,11 +31,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody
-                  v-for="item in cartItems"
-                  :key="item.id"
-                  class="bg-white divide-y divide-gray-200"
-                >
+                <tbody v-for="item in cartItems" :key="item.id">
                   <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center">
@@ -86,18 +82,16 @@
 
 <script setup lang="ts">
 import { type CartItem, type SharedState } from './App.vue'
-import { inject, ref } from 'vue'
 import { LocalStorage } from 'quasar'
-
-const emit = defineEmits(['cart-empty'])
+import { inject, ref } from 'vue'
 
 const sharedState = inject('sharedState') as SharedState
+const emit = defineEmits(['cart-empty'])
+let totalPrice = ref(0)
 
 const cartItems = ref(
   LocalStorage.getItem('cartItems') ? (LocalStorage.getItem('cartItems') as CartItem[]) : []
 )
-
-let totalPrice = ref(0)
 
 if (cartItems.value.length > 0) {
   for (const item of cartItems.value) {
