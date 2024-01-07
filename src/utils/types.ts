@@ -9,3 +9,10 @@ export interface Product {
   }
   description: string
 }
+
+export interface Comment {
+  id: number
+  text: string
+  user: string
+  date: string
+}
