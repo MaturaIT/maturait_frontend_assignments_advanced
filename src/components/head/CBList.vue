@@ -1,18 +1,14 @@
 <script setup>
-import { reactive, ref, watchEffect, onMounted } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import CartRequest from '@/services/cart-request'
 import { useCart } from '@/stores/cart'
-import { toast } from '@/stores/toast'
-import { useUser } from '@/stores/user'
 import { getResources } from '@/utils/resources'
 import { floorNumber } from '@/utils/floorNumber'
 import { removeItemByIndex } from '@/utils/arrayHandle'
 
 const router = useRouter()
-const useToast = toast()
 const cart = useCart()
-const user = useUser()
 
 const isBlurBgModal = ref(false)
 const openNav = () => {
@@ -28,10 +24,6 @@ const closeNav = () => {
   isBlurBgModal.value = false
 }
 // --------------------------------------------
-const cartPayload = reactive({
-  limit: 10,
-  page: 1,
-})
 watchEffect(async() => {
   const cartData = await CartRequest.getCart()
   cart.result = cartData[0]?.products

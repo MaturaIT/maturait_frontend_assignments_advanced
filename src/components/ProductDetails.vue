@@ -1,13 +1,8 @@
 <script setup>
-import { ref, onMounted, watchEffect, reactive } from 'vue';
-import { mapMutations } from 'vuex';
-import { watchOnce } from '@vueuse/core'
+import { ref, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import { useLoading } from '@/stores/loading'
 import { toast } from '@/stores/toast'
-import { useProduct } from '@/stores/product'
-import { getResources } from '@/utils/resources'
-import ProductRequest from '@/services/product-request'
 import CartRequest from '@/services/cart-request'
 import provinceNames from '@/utils/provinces'
 import { fakestoreApi } from '@/api/fakestoreApi';
@@ -15,7 +10,6 @@ import { fakestoreApi } from '@/api/fakestoreApi';
 const loading = useLoading()
 const router = useRouter()
 const useToast = toast()
-const product = useProduct()
 
 const productResponseData = ref([])
 const productStock = ref()

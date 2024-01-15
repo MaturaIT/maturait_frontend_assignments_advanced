@@ -1,7 +1,6 @@
 
 <script>
-  import { ref, onMounted, watch } from 'vue';
-  import { mapMutations } from 'vuex';
+  import { ref } from 'vue';
   import ProductRequest from '@/services/product-request'
   import CProductCardGrid from '@/components/CProductCardGrid.vue';
   import RProductCardGrid from '@/components/RProductCardGrid.vue';

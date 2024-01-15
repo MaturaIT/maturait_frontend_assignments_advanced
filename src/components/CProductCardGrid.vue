@@ -1,18 +1,10 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import StarRating from 'vue-star-rating';
-import { useLoading } from '@/stores/loading';
-import { toast } from '@/stores/toast';
-import { useSeller } from '@/stores/seller';
 import { useProduct } from '@/stores/product';
-import { handleDate } from '@/utils/date';
-import { productStatus } from '@/utils/status';
 import { sliceText } from '@/utils/textHandle';
-import { getResources } from '@/utils/resources';
 
 const router = useRouter()
-const useToast = toast()
 const product = useProduct()
 
 const props = defineProps({

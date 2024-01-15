@@ -17,7 +17,7 @@ const router = useRouter()
 const go = async() => {
   if (key.value) {
     await router.push(`/search/${encodeURIComponent(key.value)}`)
-    await location.reload()
+    location.reload()
     key.value = ''
   }
 }
